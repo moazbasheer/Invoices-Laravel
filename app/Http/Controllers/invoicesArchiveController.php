@@ -7,6 +7,13 @@ use App\Models\Invoice;
 
 class invoicesArchiveController extends Controller
 {
+    public function __construct() {
+        $this->middleware('auth');
+        $this->middleware('permission:ارشيف الفواتير',
+        ['only' => ['index']]);
+        $this->middleware('permission:حذف الفاتورة',
+        ['only' => ['destroy']]);
+    }
     /**
      * Display a listing of the resource.
      *

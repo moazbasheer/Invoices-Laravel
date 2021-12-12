@@ -150,7 +150,7 @@
                                 <textarea class="form-control" id="exampleTextarea" name="note" rows="3"></textarea>
                             </div>
                         </div><br>
-
+                        @can('اضافة مرفق')
                         <p class="text-danger">* صيغة المرفق pdf, jpeg ,.jpg , png </p>
                         <h5 class="card-title">المرفقات</h5>
 
@@ -158,7 +158,7 @@
                             <input type="file" name="pic" class="dropify" accept=".pdf,.jpg, .png, image/jpeg, image/png"
                                 data-height="70" />
                         </div><br>
-
+                        @endcan
                         <div class="d-flex justify-content-center">
                             <button type="submit" class="btn btn-primary">حفظ البيانات</button>
                         </div>

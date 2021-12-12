@@ -9,6 +9,17 @@ use DB;
 use Hash;
 
 class UserController extends Controller{
+    public function __construct() {
+        $this->middleware('auth');
+        $this->middleware('permission:قائمة المستخدمين', 
+        ['only' => ['index']]);
+        $this->middleware('permission:اضافة مستخدم', 
+        ['only' => ['create', 'store']]);
+        $this->middleware('permission:حذف مستخدم', 
+        ['only' => ['destroy']]);
+        $this->middleware('permission:تعديل مستخدم', 
+        ['only' => ['edit', 'update']]);
+    }
     /*** Display a listing of the resource.
       ** @return \Illuminate\Http\Response*/
     
@@ -30,13 +41,16 @@ class UserController extends Controller{
         $this->validate($request, [
             'name' => 'required',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|same:confirm-password',
-            'roles' => 'required'
+            'password' => 'required|same:confirm-password'
         ]);
         $input = $request->all();
         $input['password'] = Hash::make($input['password']);
         $user = User::create($input);
-        $user->assignRole($request->input('roles'));
+        if(empty($request->role_name)) {
+            $user->assignRole([]);
+        } else {
+            $user->assignRole($request->input('role_name'));
+        }
         return redirect()->route('users.index')->with('success','User created successfully');
     }
     /*** Display the specified resource.
@@ -65,8 +79,8 @@ class UserController extends Controller{
     public function update(Request $request, $id){
         $this->validate($request, [
             'name' => 'required',
-            'email' => 'required|email|unique:users,email,'.$id,'password' => 'same:confirm-password',
-            'roles' => 'required'
+            'email' => 'required|email|unique:users,email,'.$id,
+            'password' => 'same:confirm-password'
         ]);
 
         $input = $request->all();
@@ -75,9 +89,14 @@ class UserController extends Controller{
         }else{
             $input = array_except($input,array('password'));
         }
-        $user = User::find($id);$user->update($input);
+        $user = User::find($id);
+        $user->update($input);
         DB::table('model_has_roles')->where('model_id',$id)->delete();
-        $user->assignRole($request->input('roles'));
+        if(empty($request->role_name)) {
+            $user->assignRole([]);
+        } else {
+            $user->assignRole($request->input('role_name'));
+        }
         return redirect()->route('users.index')->with('success','User updated successfully');
     }
     /*** Remove the specified resource from storage.

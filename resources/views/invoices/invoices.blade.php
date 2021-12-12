@@ -33,8 +33,12 @@
 						<div class="card mg-b-20">
 							<div class="card-header pb-0">
 								<div class="d-flex justify-content-between">
+								@can('اضافة فاتورة')
 								<a href="{{route('invoices.create')}}" class="btn btn-primary" >اضافة فاتورة</a>
+								@endcan
+								@can('تصدير EXCEL')
 								<a href="{{route('invoices.export')}}" class="btn btn-primary" >تصدير الي اكسل</a>
+								@endcan
 								</div>
 								<p class="tx-12 tx-gray-500 mb-2">Example of Valex Bordered Table.. <a href="">Learn more</a></p>
 							</div>
@@ -90,17 +94,23 @@
 															class="btn ripple btn-primary btn-sm" data-toggle="dropdown"
 															type="button">العمليات<i class="fas fa-caret-down ml-1"></i></button>
 														<div class="dropdown-menu tx-13">
+															@can('حذف الفاتورة')
 															<a class="dropdown-item" href="#" data-invoice_id="{{ $invoice->id }}"
 																data-toggle="modal" data-target="#delete_invoice"><i
 																	class="text-danger fas fa-trash-alt"></i>&nbsp;&nbsp;حذف
 																الفاتورة</a>
+															@endcan
+															@can('ارشفة الفاتورة')
 																<a class="dropdown-item" href="#" data-invoice_id="{{ $invoice->id }}"
 																data-toggle="modal" data-target="#archive_invoice"><i
 																	class="text-danger fas fa-trash-alt"></i>&nbsp;&nbsp;ارشقة
 																الفاتورة</a>
+															@endcan
+															@can('طباعةالفاتورة')
 																<a class="dropdown-item" href="/print_invoice/{{$invoice->id}}"><i
 																	class="text-danger fas fa-trash-alt"></i>&nbsp;&nbsp;طباعة
 																الفاتورة</a>
+															@endcan
 														</div>
 													</div>
 												</td>

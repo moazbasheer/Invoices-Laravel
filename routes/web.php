@@ -8,7 +8,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\invoicesArchiveController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RoleController;
-
+use App\Http\Controllers\InvoicesReport;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -23,8 +23,6 @@ use App\Http\Controllers\RoleController;
 Route::get('/', function () {
     return view('auth.login');
 });
-
-
 Auth::routes();
 Auth::routes(['register' => false]);
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -39,4 +37,6 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('roles', RoleController::class);
     Route::resource('users', UserController::class);
 });
+Route::get('/invoices_report', [InvoicesReport::class, 'index']);
+Route::post('/invoices_report', [InvoicesReport::class, 'search_invoices']);
 Route::get('/{page}', [AdminController::class,'index']);

@@ -23,10 +23,12 @@ class CreateInvoicesTable extends Migration
             $table->string('discount');
             $table->string('rate_vat');
             $table->decimal('value_vat', 8, 2);
+            $table->string('Amount_collection');
+            $table->string('Amound_Commission');
+            $table->integer('Value_Status');
             $table->decimal('total', 8, 2);
             $table->string('status', 50);
             $table->text('note')->nullable();
-            $table->string('user');
             $table->softDeletes();
             $table->timestamps();
         });

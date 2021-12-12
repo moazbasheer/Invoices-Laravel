@@ -15,9 +15,9 @@ class CreateInvoicesDetailsTable extends Migration
     {
         Schema::create('invoices_details', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('InvoiceId');
+            $table->unsignedBigInteger('invoice_id');
             $table->string('invoice_number', 50);
-            $table->foreign('InvoiceId')->references('id')->on('invoices')->onDelete('cascade');
+            $table->foreign('invoice_id')->references('id')->on('invoices')->onDelete('cascade');
             $table->string('product', 50);
             $table->string('Section', 999);
             $table->string('Status', 50);

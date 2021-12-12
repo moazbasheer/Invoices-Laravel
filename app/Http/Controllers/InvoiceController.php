@@ -18,6 +18,19 @@ use Excel;
 
 class InvoiceController extends Controller
 {
+    public function __construct() {
+        $this->middleware('auth');
+        $this->middleware('permission:قائمة الفواتير', 
+        ['only' => ['index']]);
+        $this->middleware('permission:اضافة فاتورة', 
+        ['only' => ['create', 'store']]);
+        $this->middleware('permission:حذف الفاتورة', 
+        ['only' => ['destroy']]);
+        $this->middleware('permission:تصدير EXCEL', 
+        ['only' => ['export']]);
+        $this->middleware('permission:طباعةالفاتورة', 
+        ['only' => ['print']]);
+    }
     /**
      * Display a listing of the resource.
      *

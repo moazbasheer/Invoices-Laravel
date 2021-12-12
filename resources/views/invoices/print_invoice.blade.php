@@ -55,9 +55,9 @@
                                 <p class="invoice-info-row"><span>رقم الفاتورة</span>
                                     <span>{{ $invoices->invoice_number }}</span></p>
                                 <p class="invoice-info-row"><span>تاريخ الاصدار</span>
-                                    <span>{{ $invoices->invoice_Date }}</span></p>
+                                    <span>{{ $invoices->invoice_date }}</span></p>
                                 <p class="invoice-info-row"><span>تاريخ الاستحقاق</span>
-                                    <span>{{ $invoices->Due_date }}</span></p>
+                                    <span>{{ $invoices->due_date }}</span></p>
                                 <p class="invoice-info-row"><span>القسم</span>
                                     <span>{{ $invoices->section->section_name }}</span></p>
                             </div>
@@ -98,18 +98,18 @@
                                         <td class="tx-right" colspan="2"> {{ number_format($total, 2) }}</td>
                                     </tr>
                                     <tr>
-                                        <td class="tx-right">نسبة الضريبة ({{ $invoices->Rate_VAT }})</td>
+                                        <td class="tx-right">نسبة الضريبة ({{ $invoices->rate_vat }})</td>
                                         <td class="tx-right" colspan="2">287.50</td>
                                     </tr>
                                     <tr>
                                         <td class="tx-right">قيمة الخصم</td>
-                                        <td class="tx-right" colspan="2"> {{ number_format($invoices->Discount, 2) }}</td>
+                                        <td class="tx-right" colspan="2"> {{ number_format($invoices->discount, 2) }}</td>
 
                                     </tr>
                                     <tr>
                                         <td class="tx-right tx-uppercase tx-bold tx-inverse">الاجمالي شامل الضريبة</td>
                                         <td class="tx-right" colspan="2">
-                                            <h4 class="tx-primary tx-bold">{{ number_format($invoices->Total, 2) }}</h4>
+                                            <h4 class="tx-primary tx-bold">{{ number_format($invoices->total, 2) }}</h4>
                                         </td>
                                     </tr>
                                 </tbody>

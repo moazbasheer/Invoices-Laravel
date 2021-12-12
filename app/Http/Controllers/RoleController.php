@@ -11,17 +11,17 @@ class RoleController extends Controller{
     /*** Display a listing of the resource.
      ** @return \Illuminate\Http\Response
      */
-    /*
+    
     function __construct(){
-        $this->middleware('permission:role-list|role-create|role-edit|role-delete',
-         ['only' => ['index','store']]);
-         $this->middleware('permission:role-create', 
+        $this->middleware('permission:عرض صلاحية',
+         ['only' => ['index']]);
+         $this->middleware('permission:اضافة صلاحية', 
          ['only' => ['create','store']]);
-         $this->middleware('permission:role-edit', 
+         $this->middleware('permission:تعديل صلاحية', 
          ['only' => ['edit','update']]);
-         $this->middleware('permission:role-delete', 
+         $this->middleware('permission:حذف صلاحية', 
          ['only' => ['destroy']]);
-    }*/
+    }
     /*** Display a listing of the resource.
      ** @return \Illuminate\Http\Response
      */
@@ -46,10 +46,13 @@ class RoleController extends Controller{
      public function store(Request $request){
          $this->validate($request, [
             'name' => 'required|unique:roles,name',
-            'permission' => 'required'
         ]);
         $role = Role::create(['name' => $request->input('name')]);
-        $role->syncPermissions($request->input('permission'));
+        if(empty($request->permission)) {
+            $role->syncPermissions([]);
+        } else {
+            $role->syncPermissions($request->input('permission'));
+        }
         return redirect()->route('roles.index')->with('success','Role created successfully');
     }
     
@@ -79,13 +82,18 @@ class RoleController extends Controller{
      * @param  int  $id* @return \Illuminate\Http\Response*/
     public function update(Request $request, $id){
         $this->validate($request, [
-            'name' => 'required',
-            'permission' => 'required'
+            'name' => 'required'
         ]);
+
         $role = Role::find($id);
         $role->name = $request->input('name');
         $role->save();
-        $role->syncPermissions($request->input('permission'));
+        if(empty($request->permission)) {
+            $role->syncPermissions([]);
+        } else {
+            $role->syncPermissions($request->input('permission'));
+
+        }
         return redirect()->route('roles.index')
         ->with('success','Role updated successfully');
     }
