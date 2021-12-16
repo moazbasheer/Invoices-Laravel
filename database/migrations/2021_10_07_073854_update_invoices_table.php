@@ -15,7 +15,7 @@ class UpdateInvoicesTable extends Migration
     {
         //
         Schema::table('invoices', function (Blueprint $table) {
-            $table->bigInteger( 'section_id' )->unsigned();
+            $table->bigInteger('section_id')->unsigned();
             $table->foreign('section_id')->references('id')->on('sections')->onDelete('cascade');
         });
     }

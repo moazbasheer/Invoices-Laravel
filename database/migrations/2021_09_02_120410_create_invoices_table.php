@@ -19,12 +19,11 @@ class CreateInvoicesTable extends Migration
             $table->date('invoice_date');
             $table->date('due_date');
             $table->string('product');
-            $table->string('section');
             $table->string('discount');
             $table->string('rate_vat');
             $table->decimal('value_vat', 8, 2);
             $table->string('Amount_collection');
-            $table->string('Amound_Commission');
+            $table->string('Amount_Commission');
             $table->integer('Value_Status');
             $table->decimal('total', 8, 2);
             $table->string('status', 50);

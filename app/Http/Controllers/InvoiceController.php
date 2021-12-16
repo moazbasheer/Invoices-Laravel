@@ -39,7 +39,7 @@ class InvoiceController extends Controller
      */
     public function index()
     {
-        $invoices = Invoice::all();
+        $invoices = Invoice::with('section')->get();
         return view('invoices.invoices', compact('invoices'));
     }
 
@@ -62,13 +62,13 @@ class InvoiceController extends Controller
      */
     public function store(Request $request)
     {
-        
         Invoice::create([
             'invoice_number' => $request->invoice_number,
             'invoice_Date' => $request->invoice_Date,
             'Due_date' => $request->Due_date,
             'product' => $request->product,
             'section_id' => $request->Section,
+            'section' => $request->Section,
             'Amount_collection' => $request->Amount_collection,
             'Amount_Commission' => $request->Amount_Commission,
             'discount' => $request->Discount,

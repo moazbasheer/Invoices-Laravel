@@ -75,7 +75,7 @@
 										</div>
 										<span class="float-right my-auto mr-auto">
 											<i class="fas fa-arrow-circle-down text-white"></i>
-											<span class="text-white op-7">{{number_format(App\Models\Invoice::where('Value_Status', 1)->count() / App\Models\Invoice::count() * 100, 2)}}%</span>
+											<span class="text-white op-7">{{(App\Models\Invoice::count() == 0)?0:number_format(App\Models\Invoice::where('Value_Status', 1)->count() / App\Models\Invoice::count() * 100, 2)}}%</span>
 										</span>
 									</div>
 								</div>
@@ -97,7 +97,7 @@
 										</div>
 										<span class="float-right my-auto mr-auto">
 											<i class="fas fa-arrow-circle-up text-white"></i>
-											<span class="text-white op-7">{{number_format(App\Models\Invoice::where('Value_Status', 2)->count() / App\Models\Invoice::count() * 100, 2)}}%</span>
+											<span class="text-white op-7">{{(App\Models\Invoice::count() == 0)?0:number_format(App\Models\Invoice::where('Value_Status', 2)->count() / App\Models\Invoice::count() * 100, 2)}}%</span>
 										</span>
 									</div>
 								</div>
@@ -119,7 +119,7 @@
 										</div>
 										<span class="float-right my-auto mr-auto">
 											<i class="fas fa-arrow-circle-down text-white"></i>
-											<span class="text-white op-7">{{number_format(App\Models\Invoice::where('Value_Status', 3)->count() / App\Models\Invoice::count() * 100, 2)}}%</span>
+											<span class="text-white op-7">{{(App\Models\Invoice::count() == 0)?0:number_format(App\Models\Invoice::where('Value_Status', 3)->count() / App\Models\Invoice::count() * 100, 2)}}%</span>
 										</span>
 									</div>
 								</div>

@@ -39,17 +39,17 @@ class HomeController extends Controller
             [
                 "label" => "الفواتير غير المدفوعة",
                 'backgroundColor' => ['#ec5858'],
-                'data' => [$count_invoices_not_paid / $count_all * 100]
+                'data' => [(($count_all == 0)?0:($count_invoices_not_paid / $count_all * 100))]
             ],
             [
                 "label" => "الفواتير المدفوعة",
                 'backgroundColor' => ['#81b214'],
-                'data' => [$count_invoices_paid / $count_all * 100]
+                'data' => [(($count_all == 0)?0:($count_invoices_paid / $count_all * 100))]
             ],
             [
                 "label" => "الفواتير المدفوعة جزئيا",
                 'backgroundColor' => ['#ff9642'],
-                'data' => [$count_invoices_partially / $count_all * 100]
+                'data' => [(($count_all == 0)?0:($count_invoices_partially / $count_all * 100))]
             ],
 
 
@@ -64,9 +64,9 @@ class HomeController extends Controller
              [
                  'backgroundColor' => ['#ec5858', '#81b214','#ff9642'],
                  'data' => [
-                     $count_invoices_not_paid / $count_all * 100,
-                     $count_invoices_paid / $count_all * 100,
-                     $count_invoices_partially / $count_all * 100
+                    (($count_all == 0)?0:($count_invoices_not_paid / $count_all * 100)),
+                    (($count_all == 0)?0:($count_invoices_paid / $count_all * 100)),
+                    (($count_all == 0)?0:($count_invoices_partially / $count_all * 100))
                  ]
              ]
          ])
