@@ -5,6 +5,8 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Database\Seeders\PermissionTableSeeder;
 use Database\Seeders\CreateAdminUserSeeder;
+use Database\Seeders\ProductsTableSeeder;
+use Database\Seeders\SectionsTableSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -18,7 +20,9 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
         $this->call([
             PermissionTableSeeder::class,
-            CreateAdminUserSeeder::class
+            CreateAdminUserSeeder::class,
+            ProductsTableSeeder::class,
+            SectionsTableSeeder::class
         ]);
     }
 }
