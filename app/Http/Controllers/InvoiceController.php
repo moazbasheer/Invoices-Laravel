@@ -64,7 +64,7 @@ class InvoiceController extends Controller
     {
         Invoice::create([
             'invoice_number' => $request->invoice_number,
-            'invoice_Date' => $request->invoice_Date,
+            'invoice_date' => $request->invoice_Date,
             'Due_date' => $request->Due_date,
             'product' => $request->product,
             'section_id' => $request->Section,
