@@ -68,7 +68,6 @@ class InvoiceController extends Controller
             'due_date' => $request->Due_date,
             'product' => $request->product,
             'section_id' => $request->Section,
-            'section' => $request->Section,
             'Amount_collection' => $request->Amount_collection,
             'Amount_Commission' => $request->Amount_Commission,
             'discount' => $request->Discount,

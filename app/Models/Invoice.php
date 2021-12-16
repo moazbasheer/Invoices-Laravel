@@ -8,11 +8,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Invoice extends Model
 {
     use HasFactory, SoftDeletes;
+    
     protected $fillable = [
         'invoice_id',
         'invoice_number',
-        'invoice_Date',
-        'Due_date',
+        'invoice_date',
+        'due_date',
         'product',
         'section_id',
         'Amount_collection',
@@ -26,6 +27,7 @@ class Invoice extends Model
         'note',
         'Payment_Date'
     ];
+
     public function section() {
         return $this->belongsTo(Section::class);
     }
