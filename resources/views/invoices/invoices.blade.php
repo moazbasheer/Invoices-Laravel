@@ -111,6 +111,11 @@
 																	class="text-danger fas fa-trash-alt"></i>&nbsp;&nbsp;طباعة
 																الفاتورة</a>
 															@endcan
+															@can('تعديل الفاتورة')
+															<a class="dropdown-item" href="{{route('invoices.edit',$invoice->id)}}"><i
+																	class="text-danger fas fa-trash-alt"></i>&nbsp;&nbsp;تغيير الحالة
+																الفاتورة</a>
+															@endcan
 														</div>
 													</div>
 												</td>

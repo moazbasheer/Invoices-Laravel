@@ -92,10 +92,10 @@ class UserController extends Controller{
         $user = User::find($id);
         $user->update($input);
         DB::table('model_has_roles')->where('model_id',$id)->delete();
-        if(empty($request->role_name)) {
+        if(empty($request->roles)) {
             $user->assignRole([]);
         } else {
-            $user->assignRole($request->input('role_name'));
+            $user->assignRole($request->input('roles'));
         }
         return redirect()->route('users.index')->with('success','User updated successfully');
     }

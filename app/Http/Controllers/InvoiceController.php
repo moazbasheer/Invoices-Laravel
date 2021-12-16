@@ -9,6 +9,7 @@ use App\Models\Section;
 use App\Models\Product;
 use App\Models\User;
 use App\Notifications\AddInvoice;
+use App\Notifications\AddInvoiceToDatabase;
 use Illuminate\Http\Request;
 use App\Exports\InvoicesExport;
 use Notification;
@@ -61,6 +62,7 @@ class InvoiceController extends Controller
      */
     public function store(Request $request)
     {
+        
         Invoice::create([
             'invoice_number' => $request->invoice_number,
             'invoice_Date' => $request->invoice_Date,
@@ -105,8 +107,11 @@ class InvoiceController extends Controller
 
             $request->pic->move(public_path('Attachments/' . $invoice_number), $file_name);
         }
-        $user = User::first();
-        Notification::send($user, new AddInvoice($invoice_id));
+        $user = User::whereJsonContains('role_name', ["owner"])->get();
+        $invoice = Invoice::latest()->first();
+        Notification::send($user, new AddInvoice());
+        Notification::send($user, new AddInvoiceToDatabase($invoice));
+
         session()->flash('Add', 'تم تسجيل الفاتورة بنجاح');
         return back();
     }
@@ -128,9 +133,10 @@ class InvoiceController extends Controller
      * @param  \App\Models\Invoice  $invoice
      * @return \Illuminate\Http\Response
      */
-    public function edit(Invoice $invoice)
+    public function edit($id)
     {
-        //
+        $invoice = Invoice::find($id);
+        return view('invoices.edit_invoice', compact('invoice'));
     }
 
     /**
@@ -140,9 +146,19 @@ class InvoiceController extends Controller
      * @param  \App\Models\Invoice  $invoice
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Invoice $invoice)
+    public function update(Request $req)
     {
-        //
+        $invoice = Invoice::find($req->id);
+        $invoice->status = $req->status;
+        if($invoice->status == 'مدفوعة') {
+            $invoice->Value_Status = 1;
+        } else if($invoice->status == 'غير مدفوعة') {
+            $invoice->Value_Status = 2;
+        } else if($invoice->status == 'مدفوعة جزئيا') {
+            $invoice->Value_Status = 3;
+        }
+        $invoice->save();
+        return redirect()->route('invoices.index');
     }
 
     /**
@@ -171,11 +187,26 @@ class InvoiceController extends Controller
 
     public function print($id) {
         $invoices = Invoice::find($id);
+
+        $notifications = Auth::user()->unreadNotifications;
+        foreach($notifications as $notification) {
+            if($notification->data['id'] == $id)
+                $notification->markAsRead();
+        }
+
         return view('invoices.print_invoice', compact('invoices'));
     }
 
     public function export() {
         return Excel::download(new InvoicesExport, 'invoices.xlsx');
+    }
+
+    public function markAllAsRead() {
+        $notifications = Auth::user()->unreadNotifications;
+        if($notifications) {
+            $notifications->markAsRead();
+            return back();
+        }
     }
 
 }
